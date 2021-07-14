@@ -1,29 +1,38 @@
 const mongoose = require("mongoose");
-require("mongoose-type-url");
 const { Schema } = mongoose;
 
-const UserSchema = new mongoose.Schema({
-  id: Schema.Types.ObjectId,
-  username: {
-    type: String,
-    unique: true,
-    required: true,
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      unique: true,
+      required: "username is required to add user",
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    personal_boards: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Board",
+      },
+    ],
+    projects: [
+      {
+        _id: { type: Schema.Types.ObjectId, ref: "project" },
+        role: String,
+      },
+    ],
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  team: {
-    type: Schema.type.ObjectId,
-    ref: "Team",
-  },
-});
+  { timestamps: true }
+);
 
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model("User", userSchema);
 
 model.exports = { User };
