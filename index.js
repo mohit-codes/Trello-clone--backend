@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 // const cors = require("cors");
 const { initializeDBConnection } = require("./config/db.connect");
+const userRouter = require("./routers/user.router");
 
 const PORT = 8080;
 
@@ -10,13 +11,16 @@ const app = express();
 app.use(bodyParser.json());
 // app.use(cors);
 
+// called before any route
 initializeDBConnection();
 
 app.get("/", (req, res) => {
   return res.send({
-    status: "Server is up and running",
+    status: "Welcome",
   });
 });
+
+app.use("/users", userRouter);
 
 // Error Handler
 // Don't move
