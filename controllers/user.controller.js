@@ -5,7 +5,9 @@ const secret = process.env.JWT_SECRET;
 
 const login = async (req, res) => {
   const { username, password } = req.body;
-  const user = await User.findOne({ username: username });
+  const user = await User.findOne({ username: username }).catch((err) =>
+    console.log(err)
+  );
   if (user) {
     const isPasswordCorrect = bcrypt.compare(password, user.password);
     if (isPasswordCorrect) {
@@ -32,7 +34,8 @@ const login = async (req, res) => {
 
 const signup = async (req, res) => {
   try {
-    const { username, email, passowrd } = req.body;
+    const { username, password, email } = req.body;
+
     const user = await User.findOne({ username: username });
     if (user) {
       return res.json({
@@ -41,20 +44,29 @@ const signup = async (req, res) => {
       });
     }
     try {
-      const hashedPassword = await bcrypt.hash(passowrd, 10);
-      const newUser = new User({ username, email, hashedPassword });
-      const savedUser = await User.save(newUser);
-      const token = jwt({ _id: savedUser._id }, secret);
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const newUser = new User({
+        username: username,
+        password: hashedPassword,
+        email: email,
+      });
+      const savedUser = await newUser.save();
+      const token = jwt.sign({ _id: savedUser._id }, secret);
 
-      res.json({ status: true, message: "Signed up successfully." });
+      res.json({
+        user: savedUser,
+        token,
+        success: true,
+        message: "Signed up successfully.",
+      });
     } catch (error) {
       console.log(error);
-      res.json({ status: true, message: "Something went wrong!" });
+      res.json({ status: false, message: "Something went wrong!" });
     }
   } catch (error) {
     console.log(error);
-    res.json({ status: true, message: "An unexpected error occured." });
+    res.json({ status: false, message: "An unexpected error occured." });
   }
 };
 
-module.exports = { login };
+module.exports = { login, signup };

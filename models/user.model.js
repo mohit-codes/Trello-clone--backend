@@ -33,6 +33,14 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const User = mongoose.model("User", userSchema);
+userSchema.statics.findOneOrCreateWith = async function findOneOrCreateWith(
+  condition,
+  doc
+) {
+  const one = await this.findOne(condition);
+  return one || this.create(doc);
+};
 
-module.exports = { User };
+const User = mongoose.model("users", userSchema);
+
+module.exports = User;
