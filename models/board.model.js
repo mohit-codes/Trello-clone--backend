@@ -8,16 +8,21 @@ const boardSchema = new Schema(
       required: "cannot add unnamed board",
       unique: true,
     },
-    lists: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "List",
-      },
-    ],
+    user_id: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    lists: [{ type: Schema.Types.ObjectId, ref: "List" }],
   },
   { timestamps: true }
 );
-
+boardSchema.statics.findOneOrCreateWith = async function findOneOrCreateWith(
+  condition,
+  doc
+) {
+  const one = await this.findOne(condition);
+  return one || this.create(doc);
+};
 //Export the model
 const Board = mongoose.model("Board", boardSchema);
 module.exports = { Board };

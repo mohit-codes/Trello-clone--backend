@@ -9,22 +9,22 @@ const cardSchema = new Schema(
       unique: true,
     },
     description: String,
-    cards: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Card",
-      },
-    ],
-    comments: [
-      {
-        _id: { type: Schema.Types.ObjectId, ref: "Comment" },
-      },
-    ],
-    members: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    list_id: {
+      type: Schema.Types.ObjectId,
+      ref: "List",
+    },
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+    // members: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );
-
+cardSchema.statics.findOneOrCreateWith = async function findOneOrCreateWith(
+  condition,
+  doc
+) {
+  const one = await this.findOne(condition);
+  return one || this.create(doc);
+};
 //Export the model
 const Card = mongoose.model("Card", cardSchema);
 module.exports = { Card };

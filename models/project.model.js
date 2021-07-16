@@ -25,6 +25,14 @@ const projectSchema = new Schema(
   { timestamps: true }
 );
 
+projectSchema.statics.findOneOrCreateWith = async function findOneOrCreateWith(
+  condition,
+  doc
+) {
+  const one = await this.findOne(condition);
+  return one || this.create(doc);
+};
+
 //Export the model
-const Project = mongoose.model("Project", projectSchema);
+const Project = mongoose.model("Projects", projectSchema);
 module.exports = { Project };
