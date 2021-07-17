@@ -1,24 +1,18 @@
-const Board = require("../models/board.model");
-const User = require("../models/user.model");
+const List = require("../models/list.model");
 const mongoose = require("mongoose");
 const { extend } = require("lodash");
-const createBoard = async (req, res) => {
+const createList = async (req, res) => {
   try {
     const { name, userId } = req.body;
-    const board = new Board({
+    const board = new List({
       name: name,
       userId: mongoose.Types.ObjectId(userId),
     });
-    const savedBoard = await board.save();
-
-    const user = await User.findById(userId);
-    user.personalBoards.push(savedBoard);
-    await user.save();
-
+    const savedList = await board.save();
     res.status(201).json({
       success: true,
-      message: "Board created",
-      boardId: savedBoard._id,
+      message: "List created",
+      boardId: savedList._id,
     });
   } catch (err) {
     console.log(err);
@@ -26,9 +20,9 @@ const createBoard = async (req, res) => {
   }
 };
 
-const findBoard = async (req, res, next, boardId) => {
+const findList = async (req, res, next, boardId) => {
   try {
-    const board = await Board.findById(boardId);
+    const board = await List.findById(boardId);
     if (!board) {
       throw Error("Unable to fetch the board");
     }
@@ -41,15 +35,15 @@ const findBoard = async (req, res, next, boardId) => {
   }
 };
 
-const getBoardById = async (req, res) => {
+const getListById = async (req, res) => {
   const { board } = req;
   res.status(200).json({ success: true, board: board, message: "board found" });
 };
 
-const updateBoard = async (req, res) => {
+const updateList = async (req, res) => {
   let { board } = req;
   const boardUpdate = req.body;
-  if (updateBoard._id || updateBoard.userId) {
+  if (updateList._id || updateList.userId) {
     return res.status(400).json({
       success: false,
       message: "Forbidden request, board id or user ref cannot be updated.",
@@ -60,12 +54,12 @@ const updateBoard = async (req, res) => {
   res.json({ success: true, board: board });
 };
 
-const deleteBoard = async (req, res) => {
+const deleteList = async (req, res) => {
   const { board } = req;
   board
     .delete()
     .then(() => {
-      return res.json({ success: true, message: "Board deleted" });
+      return res.json({ success: true, message: "List deleted" });
     })
     .catch((err) => {
       res.json({ success: false, message: err.message });
@@ -73,9 +67,9 @@ const deleteBoard = async (req, res) => {
 };
 
 module.exports = {
-  createBoard,
-  deleteBoard,
-  findBoard,
-  updateBoard,
-  getBoardById,
+  createList,
+  deleteList,
+  findList,
+  updateList,
+  getListById,
 };

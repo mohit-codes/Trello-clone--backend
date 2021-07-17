@@ -8,7 +8,7 @@ const listSchema = new Schema(
       required: "cannot add unnamed list",
       unique: true,
     },
-    board_id: { type: Schema.Types.ObjectId, ref: "Board" },
+    boardId: { type: Schema.Types.ObjectId, ref: "Board" },
     cards: [{ type: Schema.Types.ObjectId, ref: "Card" }],
   },
   { timestamps: true }
@@ -23,4 +23,4 @@ listSchema.statics.findOneOrCreateWith = async function findOneOrCreateWith(
 };
 //Export the model
 const List = mongoose.model("List", listSchema);
-module.exports = { List };
+module.exports = List;
