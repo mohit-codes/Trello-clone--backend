@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // const cors = require("cors");
 const { initializeDBConnection } = require("./config/db.connect");
 const userRouter = require("./routers/user.router");
-
+const boardRouter = require("./routers/board.router");
 const PORT = 8080;
 
 const app = express();
@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", userRouter);
-
+app.use("/boards", boardRouter);
 // Error Handler
 // Don't move
 app.use((err, req, res, next) => {

@@ -5,12 +5,17 @@ const {
   findBoard,
   updateBoard,
   deleteBoard,
+  getBoardById,
 } = require("../controllers/board.controller");
 
 router.route("/create").post(createBoard);
 
-router.param("userId").post(findBoard);
+router.param("boardId", findBoard);
 
-router.route("/:userId").put(updateBoard).delete(deleteBoard);
+router
+  .route("/:boardId")
+  .get(getBoardById)
+  .put(updateBoard)
+  .delete(deleteBoard);
 
 module.exports = router;

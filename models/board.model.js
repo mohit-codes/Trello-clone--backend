@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const boardSchema = new Schema(
+const boardSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: "cannot add unnamed board",
       unique: true,
     },
-    user_id: {
+    userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
@@ -24,5 +24,5 @@ boardSchema.statics.findOneOrCreateWith = async function findOneOrCreateWith(
   return one || this.create(doc);
 };
 //Export the model
-const Board = mongoose.model("Board", boardSchema);
-module.exports = { Board };
+const Board = mongoose.model("boards", boardSchema);
+module.exports = Board;

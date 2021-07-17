@@ -39,7 +39,7 @@ const signup = async (req, res) => {
     const user = await User.findOne({ username: username });
     if (user) {
       return res.json({
-        status: false,
+        success: false,
         message: "Account with email already exists, Try loggin in instead!",
       });
     }
@@ -61,11 +61,11 @@ const signup = async (req, res) => {
       });
     } catch (error) {
       console.log(error);
-      res.json({ status: false, message: "Something went wrong!" });
+      res.json({ success: false, message: "Something went wrong!" });
     }
   } catch (error) {
     console.log(error);
-    res.json({ status: false, message: "An unexpected error occured." });
+    res.json({ success: false, message: "An unexpected error occured." });
   }
 };
 
