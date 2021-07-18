@@ -8,14 +8,10 @@ const {
   getListById,
 } = require("../controllers/list.controller");
 
-router.route("/create").post(createBoard);
+router.route("/create").post(createList);
 
-router.param("boardId", findBoard);
+router.param("listId", findList);
 
-router
-  .route("/:boardId")
-  .get(getBoardById)
-  .put(updateBoard)
-  .delete(deleteBoard);
+router.route("/:listId").get(getListById).put(updateList).delete(deleteList);
 
 module.exports = router;

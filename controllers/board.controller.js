@@ -2,6 +2,7 @@ const Board = require("../models/board.model");
 const User = require("../models/user.model");
 const mongoose = require("mongoose");
 const { extend } = require("lodash");
+const List = require("../models/list.model");
 const createBoard = async (req, res) => {
   try {
     const { name, userId } = req.body;
@@ -37,7 +38,7 @@ const findBoard = async (req, res, next, boardId) => {
   } catch (error) {
     res
       .status(400)
-      .json({ success: false, message: "Unable to retrive the product" });
+      .json({ success: false, message: "Unable to retrive the board" });
   }
 };
 
@@ -49,7 +50,7 @@ const getBoardById = async (req, res) => {
 const updateBoard = async (req, res) => {
   let { board } = req;
   const boardUpdate = req.body;
-  if (updateBoard._id || updateBoard.userId) {
+  if (boardUpdate._id || boardUpdate.userId) {
     return res.status(400).json({
       success: false,
       message: "Forbidden request, board id or user ref cannot be updated.",
@@ -62,6 +63,14 @@ const updateBoard = async (req, res) => {
 
 const deleteBoard = async (req, res) => {
   const { board } = req;
+  const { userId } = board;
+  await User.updateOne(
+    { _id: userId },
+    { $pullAll: { personalBoards: [board._id] } }
+  );
+  await List.deleteMany({ boardId: board._id }).catch((err) =>
+    console.log(err)
+  );
   board
     .delete()
     .then(() => {

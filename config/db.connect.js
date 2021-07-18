@@ -3,6 +3,7 @@ require("dotenv").config();
 
 function initializeDBConnection() {
   mongoose
+    // eslint-disable-next-line no-undef
     .connect(process.env.DB_URL, {
       useUnifiedTopology: true,
       useNewUrlParser: true,

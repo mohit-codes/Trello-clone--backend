@@ -12,7 +12,24 @@ Backend repository
 
 ### Board
 
-- POST /board/create - Takes name and userId to add new board and returns boardId.
-- GET /board/:boardId - Fetch the details of single board.
-- PUT /board/:boardId - Update details of board (except id and ref).
-- DELETE /board/:boardId - delete board.
+- POST /boards/create - Takes name and userId to add new board and returns boardId.
+- GET /boards/:boardId - Fetch the details of single board.
+- PUT /boards/:boardId - Update details of board (except id and ref).
+- DELETE /boards/:boardId - delete board.
+
+### List
+
+- POST /lists/create - Takes name and boardId to add new list and returns listId.
+- GET /lists/:listId - Fetch the details of single list.
+- PUT /lists/:listId - Update details of list (except id and board ref).
+- DELETE /lists/:listId - delete list.
+
+## Tech Stack
+
+### - Mongoose
+
+### - Node js
+
+### - Express js
+
+### - MongoDB

@@ -1,18 +1,24 @@
 const List = require("../models/list.model");
-const mongoose = require("mongoose");
 const { extend } = require("lodash");
+const Board = require("../models/board.model");
+
 const createList = async (req, res) => {
   try {
-    const { name, userId } = req.body;
-    const board = new List({
-      name: name,
-      userId: mongoose.Types.ObjectId(userId),
+    const { title, boardId } = req.body;
+    const list = new List({
+      title,
+      boardId,
     });
-    const savedList = await board.save();
+    const savedList = await list.save();
+
+    const board = await Board.findById(boardId);
+    board.lists.push(savedList);
+    await board.save();
+
     res.status(201).json({
       success: true,
-      message: "List created",
-      boardId: savedList._id,
+      message: "Board created",
+      listId: savedList._id,
     });
   } catch (err) {
     console.log(err);
@@ -20,43 +26,45 @@ const createList = async (req, res) => {
   }
 };
 
-const findList = async (req, res, next, boardId) => {
+const findList = async (req, res, next, listId) => {
   try {
-    const board = await List.findById(boardId);
-    if (!board) {
-      throw Error("Unable to fetch the board");
+    const list = await List.findById(listId);
+    if (!list) {
+      throw Error("Unable to fetch the list");
     }
-    req.board = board;
+    req.list = list;
     next();
   } catch (error) {
     res
       .status(400)
-      .json({ success: false, message: "Unable to retrive the product" });
+      .json({ success: false, message: "Unable to retrive the list" });
   }
 };
 
 const getListById = async (req, res) => {
-  const { board } = req;
-  res.status(200).json({ success: true, board: board, message: "board found" });
+  const { list } = req;
+  res.status(200).json({ success: true, list: list, message: "list found" });
 };
 
 const updateList = async (req, res) => {
-  let { board } = req;
-  const boardUpdate = req.body;
-  if (updateList._id || updateList.userId) {
+  let { list } = req;
+  const listUpdate = req.body;
+  if (listUpdate._id || listUpdate.boardId) {
     return res.status(400).json({
       success: false,
-      message: "Forbidden request, board id or user ref cannot be updated.",
+      message: "Forbidden request, list id or board ref cannot be updated.",
     });
   }
-  board = extend(board, boardUpdate);
-  board = await board.save();
-  res.json({ success: true, board: board });
+  list = extend(list, listUpdate);
+  list = await list.save();
+  res.json({ success: true, list: list });
 };
 
 const deleteList = async (req, res) => {
-  const { board } = req;
-  board
+  const { list } = req;
+  const { boardId } = list;
+  await Board.updateOne({ _id: boardId }, { $pullAll: { lists: [list._id] } });
+  list
     .delete()
     .then(() => {
       return res.json({ success: true, message: "List deleted" });

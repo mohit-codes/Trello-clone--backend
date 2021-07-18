@@ -3,11 +3,12 @@ const { Schema } = mongoose;
 
 const boardSchema = new mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
       required: "cannot add unnamed board",
       unique: true,
     },
+    description: String,
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",

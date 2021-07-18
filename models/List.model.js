@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const listSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
       required: "cannot add unnamed list",
       unique: true,
@@ -22,5 +22,5 @@ listSchema.statics.findOneOrCreateWith = async function findOneOrCreateWith(
   return one || this.create(doc);
 };
 //Export the model
-const List = mongoose.model("List", listSchema);
+const List = mongoose.model("lists", listSchema); //first param collection name (not case sensitive)
 module.exports = List;

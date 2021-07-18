@@ -2,6 +2,7 @@ const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Board = require("../models/board.model");
+// eslint-disable-next-line no-undef
 const secret = process.env.JWT_SECRET;
 
 const login = async (req, res) => {
