@@ -3,13 +3,13 @@ const { Schema } = mongoose;
 
 const cardSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
       required: "cannot add unnamed card",
       unique: true,
     },
     description: String,
-    list_id: {
+    listId: {
       type: Schema.Types.ObjectId,
       ref: "List",
     },
@@ -18,6 +18,7 @@ const cardSchema = new Schema(
   },
   { timestamps: true }
 );
+
 cardSchema.statics.findOneOrCreateWith = async function findOneOrCreateWith(
   condition,
   doc
@@ -26,5 +27,5 @@ cardSchema.statics.findOneOrCreateWith = async function findOneOrCreateWith(
   return one || this.create(doc);
 };
 //Export the model
-const Card = mongoose.model("Card", cardSchema);
-module.exports = { Card };
+const Card = mongoose.model("cards", cardSchema);
+module.exports = Card;

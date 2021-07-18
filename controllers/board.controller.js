@@ -1,14 +1,14 @@
 const Board = require("../models/board.model");
 const User = require("../models/user.model");
-const mongoose = require("mongoose");
 const { extend } = require("lodash");
 const List = require("../models/list.model");
+
 const createBoard = async (req, res) => {
   try {
-    const { name, userId } = req.body;
+    const { title, userId } = req.body;
     const board = new Board({
-      name: name,
-      userId: mongoose.Types.ObjectId(userId),
+      title: title,
+      userId: userId,
     });
     const savedBoard = await board.save();
 

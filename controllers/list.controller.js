@@ -1,6 +1,7 @@
 const List = require("../models/list.model");
 const { extend } = require("lodash");
 const Board = require("../models/board.model");
+const Card = require("../models/card.model");
 
 const createList = async (req, res) => {
   try {
@@ -17,7 +18,7 @@ const createList = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: "Board created",
+      message: "list created",
       listId: savedList._id,
     });
   } catch (err) {
@@ -64,6 +65,7 @@ const deleteList = async (req, res) => {
   const { list } = req;
   const { boardId } = list;
   await Board.updateOne({ _id: boardId }, { $pullAll: { lists: [list._id] } });
+  await Card.deleteMany({ listId: list._id }).catch((err) => console.log(err));
   list
     .delete()
     .then(() => {
