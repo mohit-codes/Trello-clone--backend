@@ -8,6 +8,7 @@ Backend repository
 
 - POST /users/login - Takes username and password as a parameter and returns JWT.
 - POST /users/signup - Providing username, password, and email would add a new user into the database.
+- GET /users/boards/:userId - fetch all boards of single user.
 
 ### Board
 
