@@ -1,0 +1,31 @@
+{
+  "name": "trello-clone--backend",
+  "version": "1.0.0",
+  "description": "Backend repository",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohit-codes/Trello-clone--backend.git"
+  },
+  "author": "mohit-codes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mohit-codes/Trello-clone--backend/issues"
+  },
+  "homepage": "https://github.com/mohit-codes/Trello-clone--backend#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^5.13.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.31.0"
+  }
+}
