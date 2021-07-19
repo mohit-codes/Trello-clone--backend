@@ -1,5 +1,6 @@
 const { extend } = require("lodash");
 const Card = require("../models/card.model");
+const Comment = require("../models/comment.model");
 const List = require("../models/list.model");
 const createCard = async (req, res) => {
   try {
@@ -59,9 +60,11 @@ const updateCard = async (req, res) => {
 const deleteCard = async (req, res) => {
   const { card } = req;
   const { listId } = card;
-  await List.updateOne({ _id: listId }, { $pullAll: { cards: [card._id] } });
+  await List.updateOne({ _id: listId }, { $pull: { cards: card._id } });
   //below line for deleting all comments
-  //   await List.deleteMany({ cardId: card._id }).catch((err) => console.log(err))
+  await Comment.deleteMany({ cardId: card._id }).catch((err) =>
+    console.log(err)
+  );
   card
     .delete()
     .then(() => {

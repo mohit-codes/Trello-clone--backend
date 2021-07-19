@@ -6,6 +6,8 @@ const userRouter = require("./routers/user.router");
 const boardRouter = require("./routers/board.router");
 const listRouter = require("./routers/list.router");
 const cardRouter = require("./routers/card.router");
+const commentRouter = require("./routers/comment.router");
+
 const PORT = 8080;
 
 const app = express();
@@ -25,6 +27,7 @@ app.use("/users", userRouter);
 app.use("/boards", boardRouter);
 app.use("/lists", listRouter);
 app.use("/cards", cardRouter);
+app.use("/comments", commentRouter);
 // Error Handler
 // Don't move
 app.use((err, req, res) => {

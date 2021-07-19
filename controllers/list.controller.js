@@ -64,7 +64,7 @@ const updateList = async (req, res) => {
 const deleteList = async (req, res) => {
   const { list } = req;
   const { boardId } = list;
-  await Board.updateOne({ _id: boardId }, { $pullAll: { lists: [list._id] } });
+  await Board.updateOne({ _id: boardId }, { $pull: { lists: list._id } });
   await Card.deleteMany({ listId: list._id }).catch((err) => console.log(err));
   list
     .delete()

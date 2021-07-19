@@ -66,7 +66,7 @@ const deleteBoard = async (req, res) => {
   const { userId } = board;
   await User.updateOne(
     { _id: userId },
-    { $pullAll: { personalBoards: [board._id] } }
+    { $pull: { personalBoards: board._id } }
   );
   await List.deleteMany({ boardId: board._id }).catch((err) =>
     console.log(err)
