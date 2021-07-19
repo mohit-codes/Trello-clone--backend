@@ -81,10 +81,20 @@ const deleteBoard = async (req, res) => {
     });
 };
 
+const fetchListsByBoardId = async (req, res) => {
+  const boardId = req.params.boardId;
+  const { lists } = await Board.findById(boardId);
+  const data = await List.find({ _id: { $in: lists } }).catch((err) =>
+    console.log(err)
+  );
+  return res.status(200).json({ success: true, lists: data });
+};
+
 module.exports = {
   createBoard,
   deleteBoard,
   findBoard,
   updateBoard,
   getBoardById,
+  fetchListsByBoardId,
 };

@@ -5,10 +5,11 @@ const {
   findCard,
   updateCard,
   deleteCard,
+  fetchCommentsByCardId,
 } = require("../controllers/card.controller");
 
 router.route("/create").post(createCard);
-
+router.route("/comments/:cardId").get(fetchCommentsByCardId);
 router.param("cardId", findCard);
 
 router.route("/:cardId").put(updateCard).delete(deleteCard);

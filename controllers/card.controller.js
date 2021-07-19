@@ -75,10 +75,20 @@ const deleteCard = async (req, res) => {
     });
 };
 
+const fetchCommentsByCardId = async (req, res) => {
+  const cardId = req.params.cardId;
+  const { comments } = await Card.findById(cardId);
+  const data = await Comment.find({ _id: { $in: comments } }).catch((err) =>
+    console.log(err)
+  );
+  return res.status(200).json({ success: true, Comment: data });
+};
+
 module.exports = {
   createCard,
   deleteCard,
   findCard,
   updateCard,
   getCardById,
+  fetchCommentsByCardId,
 };

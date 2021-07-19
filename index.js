@@ -28,8 +28,10 @@ app.use("/boards", boardRouter);
 app.use("/lists", listRouter);
 app.use("/cards", cardRouter);
 app.use("/comments", commentRouter);
-// Error Handler
-// Don't move
+
+// ---------------
+// Error Handlers
+
 app.use((err, req, res) => {
   console.error(err.stack);
   res.status(500).json({

@@ -76,10 +76,19 @@ const deleteList = async (req, res) => {
     });
 };
 
+const fetchCardsByListId = async (req, res) => {
+  const listId = req.params.listId;
+  const { cards } = await List.findById(listId);
+  const data = await Card.find({ _id: { $in: cards } }).catch((err) =>
+    console.log(err)
+  );
+  return res.status(200).json({ success: true, cards: data });
+};
 module.exports = {
   createList,
   deleteList,
   findList,
   updateList,
   getListById,
+  fetchCardsByListId,
 };

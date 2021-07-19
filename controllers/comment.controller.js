@@ -44,10 +44,10 @@ const findComment = async (req, res, next, commentId) => {
 const updateComment = async (req, res) => {
   let { comment } = req;
   const commentUpdate = req.body;
-  if (commentUpdate._id || commentUpdate.cardId) {
+  if (commentUpdate._id || commentUpdate.author) {
     return res.status(400).json({
       success: false,
-      message: "Forbidden request, comment id and card ref cannot be updated.",
+      message: "Forbidden request, comment id and author cannot be updated.",
     });
   }
   comment = extend(comment, commentUpdate);
