@@ -37,7 +37,7 @@ const findComment = async (req, res, next, commentId) => {
   } catch (error) {
     res
       .status(400)
-      .json({ success: false, message: "Unable to retrive the Comment" });
+      .json({ success: false, message: "Unable to retrieve the Comment" });
   }
 };
 
