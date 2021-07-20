@@ -3,9 +3,9 @@ const { Schema } = mongoose;
 
 const commentSchema = new Schema(
   {
+    content: String,
     author: { type: String, required: "Author is required" },
-    date: Date.now,
-    card_id: { type: Schema.Types.ObjectId, ref: "Card" },
+    cardId: { type: Schema.Types.ObjectId, ref: "Card" },
   },
   { timestamps: true }
 );
@@ -19,5 +19,5 @@ commentSchema.statics.findOneOrCreateWith = async function findOneOrCreateWith(
 };
 
 //Export the model
-const Comment = mongoose.model("Comment", commentSchema);
-module.exports = { Comment };
+const Comment = mongoose.model("comments", commentSchema);
+module.exports = Comment;

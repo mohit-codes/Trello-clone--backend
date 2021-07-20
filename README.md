@@ -1,6 +1,6 @@
 # Trello-clone--backend
 
-Backend repository
+Backend using ExpressJS connected to MongoDB through Mongoose
 
 ## List of API endpoints
 
@@ -16,6 +16,7 @@ Backend repository
 - GET /boards/:boardId - Fetch the details of single board.
 - PUT /boards/:boardId - Update details of board (except id and ref).
 - DELETE /boards/:boardId - delete board.
+- GET /boards/lists/:boardId - fetch all lists of single board.
 
 ### Lists
 
@@ -23,19 +24,22 @@ Backend repository
 - GET /lists/:listId - Fetch the details of single list.
 - PUT /lists/:listId - Update details of list (except id and board ref).
 - DELETE /lists/:listId - delete list.
+- GET /lists/cards/:listId - fetch all cards of single list.
 
 ### Cards
 
 - POST /cards/create - Takes title and listId to add new card and returns cardId (description is optional in request).
 - PUT /cards/:cardId - Update details of card (except id and list ref).
 - DELETE /cards/:cardId - delete card.
+- GET cards/comments/:cardId - fetch all comments of single card.
 
-## Tech Stack
+### Comment
 
-### - Mongoose
+- POST /comment/create - Takes content, author and cardId to add new comment and returns commentId
+- PUT /comment/:commentId - Update comment.
+- DELETE /comment/:commentId - delete comment.
 
-### - Node js
+## Future Enchancements
 
-### - Express js
-
-### - MongoDB
+- Change password for users.
+- Implement Project (team) module so that different user collaborate.
