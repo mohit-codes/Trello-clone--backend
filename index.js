@@ -7,7 +7,9 @@ const boardRouter = require("./routers/board.router");
 const listRouter = require("./routers/list.router");
 const cardRouter = require("./routers/card.router");
 const commentRouter = require("./routers/comment.router");
-
+const routeHandler = require("./middlewares/routeHandler");
+const errorHandler = require("./middlewares/errorHanler");
+const authenticate = require("./middlewares/authenticate");
 const PORT = 8080;
 
 const app = express();
@@ -19,36 +21,18 @@ initializeDBConnection();
 
 app.get("/", (req, res) => {
   return res.send({
-    status: "Welcome",
+    status: "Welcome to trello-clone Backend ",
   });
 });
 
 app.use("/users", userRouter);
-app.use("/boards", boardRouter);
-app.use("/lists", listRouter);
-app.use("/cards", cardRouter);
-app.use("/comments", commentRouter);
+app.use("/boards", authenticate, boardRouter);
+app.use("/lists", authenticate, listRouter);
+app.use("/cards", authenticate, cardRouter);
+app.use("/comments", authenticate, commentRouter);
 
-// ---------------
-// Error Handlers
-
-app.use((err, req, res) => {
-  console.error(err.stack);
-  res.status(500).json({
-    success: false,
-    message: "error occured, see the errMessage key for more details",
-    errorMessage: err.message,
-  });
-});
-
-//  404 Route Handler
-//  Note: Do NOT move. This should be the last route
-app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: "route not found on server, please check",
-  });
-});
+app.use(routeHandler);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log("server started on port: ", PORT);
