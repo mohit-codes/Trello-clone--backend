@@ -7,6 +7,7 @@ const boardRouter = require("./routers/board.router");
 const listRouter = require("./routers/list.router");
 const cardRouter = require("./routers/card.router");
 const commentRouter = require("./routers/comment.router");
+const projectRouter = require("./routers/project.router");
 const routeHandler = require("./middlewares/routeHandler");
 const errorHandler = require("./middlewares/errorHanler");
 const authenticate = require("./middlewares/authenticate");
@@ -26,10 +27,11 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", userRouter);
-app.use("/boards", authenticate, boardRouter);
-app.use("/lists", authenticate, listRouter);
-app.use("/cards", authenticate, cardRouter);
-app.use("/comments", authenticate, commentRouter);
+app.use("/boards", boardRouter);
+app.use("/lists", listRouter);
+app.use("/cards", cardRouter);
+app.use("/comments", commentRouter);
+app.use("/projects", projectRouter);
 
 app.use(routeHandler);
 app.use(errorHandler);

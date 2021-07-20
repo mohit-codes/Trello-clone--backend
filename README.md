@@ -9,6 +9,15 @@ Backend using ExpressJS connected to MongoDB through Mongoose
 - POST /users/login - Takes username and password as a parameter and returns JWT.
 - POST /users/signup - Providing username, password, and email would add a new user into the database.
 - GET /users/boards/:userId - fetch all boards of single user.
+- GET /users/projects/:userId - fetch all projects of single user.
+
+### Projects (Teams)
+
+- POST /projects/create - Takes title, description and userId to create new project (description is optional ).
+- POST /projects/join - Join project using project code and userId.
+- PUT /projects/:projectId - Update details of project(except id and refs).
+- DELETE /projects/:projectId - delete project.
+- GET /projects/boards/:projectId - fetch all projects project.
 
 ### Boards
 
@@ -38,8 +47,3 @@ Backend using ExpressJS connected to MongoDB through Mongoose
 - POST /comment/create - Takes content, author and cardId to add new comment and returns commentId
 - PUT /comment/:commentId - Update comment.
 - DELETE /comment/:commentId - delete comment.
-
-## Future Enchancements
-
-- Change password for users.
-- Implement Project (team) module so that different user collaborate.
