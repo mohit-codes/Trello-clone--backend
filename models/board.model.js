@@ -9,6 +9,10 @@ const boardSchema = new mongoose.Schema(
       unique: true,
     },
     description: String,
+    projectId: {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",

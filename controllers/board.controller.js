@@ -1,20 +1,29 @@
 const Board = require("../models/board.model");
 const User = require("../models/user.model");
+const Project = require("../models/project.model");
 const { extend } = require("lodash");
 const List = require("../models/list.model");
 
 const createBoard = async (req, res) => {
   try {
-    const { title, userId } = req.body;
+    const { title, userId, isPersonal, projectId } = req.body;
     const board = new Board({
       title: title,
       userId: userId,
+      projectId: projectId,
     });
     const savedBoard = await board.save();
 
-    const user = await User.findById(userId);
-    user.personalBoards.push(savedBoard);
-    await user.save();
+    if (isPersonal) {
+      const user = await User.findById(userId);
+      user.personalBoards.push(savedBoard);
+      await user.save();
+    } else {
+      await Project.updateOne(
+        { _id: projectId },
+        { $push: { boards: savedBoard._id } }
+      );
+    }
 
     res.status(201).json({
       success: true,
@@ -38,7 +47,7 @@ const findBoard = async (req, res, next, boardId) => {
   } catch (error) {
     res
       .status(400)
-      .json({ success: false, message: "Unable to retrive the board" });
+      .json({ success: false, message: "Unable to retrieve the board" });
   }
 };
 
