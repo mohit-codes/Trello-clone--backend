@@ -94,8 +94,9 @@ const updateProject = async (req, res) => {
 const deleteProject = async (req, res) => {
   const { project } = req;
   const { teamMembers } = project;
+  const members = teamMembers.map((m) => m.memberId);
   await User.updateMany(
-    { _id: { $in: teamMembers } },
+    { _id: { $in: members } },
     { $pull: { projects: project._id } }
   );
   await Board.deleteMany({ projectId: project._id }).catch((err) =>
