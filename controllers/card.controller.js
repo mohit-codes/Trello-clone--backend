@@ -4,9 +4,10 @@ const Comment = require("../models/comment.model");
 const List = require("../models/list.model");
 const createCard = async (req, res) => {
   try {
-    const { title, listId } = req.body;
+    const { title, description, listId } = req.body;
     const card = new Card({
       title: title,
+      description: description,
       listId: listId,
     });
     const savedCard = await card.save();
@@ -34,7 +35,7 @@ const findCard = async (req, res, next, cardId) => {
   } catch (error) {
     res
       .status(400)
-      .json({ success: false, message: "Unable to retrive the card" });
+      .json({ success: false, message: "Unable to retrieve the card" });
   }
 };
 

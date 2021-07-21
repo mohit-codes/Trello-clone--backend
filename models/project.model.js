@@ -3,24 +3,32 @@ const { Schema } = mongoose;
 
 const projectSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
       required: "cannot add unnamed team",
       unique: true,
     },
     description: { type: String },
+    adminId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
     boards: [
       {
         type: Schema.Types.ObjectId,
         ref: "Board",
       },
     ],
-    team_members: [
+    teamMembers: [
       {
-        type: Schema.Types.ObjectId,
-        ref: "User",
+        memberId: {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+        },
+        username: String,
       },
     ],
+    projectCode: Number,
   },
   { timestamps: true }
 );
@@ -34,5 +42,5 @@ projectSchema.statics.findOneOrCreateWith = async function findOneOrCreateWith(
 };
 
 //Export the model
-const Project = mongoose.model("Projects", projectSchema);
-module.exports = { Project };
+const Project = mongoose.model("projects", projectSchema);
+module.exports = Project;

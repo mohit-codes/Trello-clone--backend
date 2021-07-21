@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    projects: [{ type: Schema.Types.ObjectId, ref: "Project" }],
     personalBoards: [{ type: Schema.Types.ObjectId, ref: "Board" }],
   },
   { timestamps: true }
