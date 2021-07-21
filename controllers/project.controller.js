@@ -121,6 +121,29 @@ const fetchBoardsByProjectId = async (req, res) => {
   return res.status(200).json({ success: true, boards: data });
 };
 
+const removeTeamMember = async (req, res) => {
+  try {
+    const { project } = req;
+    const { memberId } = req.body;
+    if (memberId == project.adminId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "admin can't be removed" });
+    }
+    await User.updateOne(
+      { _id: memberId },
+      { $pull: { projects: project._id } }
+    );
+    project.teamMembers = project.teamMembers.filter(
+      (member) => member.memberId != memberId
+    );
+    await project.save();
+    return res.json({ success: true, message: "member removed" });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+};
+
 module.exports = {
   createProject,
   deleteProject,
@@ -128,5 +151,6 @@ module.exports = {
   joinProject,
   updateProject,
   getProjectById,
+  removeTeamMember,
   fetchBoardsByProjectId,
 };

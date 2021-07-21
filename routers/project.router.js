@@ -8,12 +8,14 @@ const {
   joinProject,
   fetchBoardsByProjectId,
   getProjectById,
+  removeTeamMember,
 } = require("../controllers/project.controller");
 
 router.route("/create").post(createProject);
 router.route("/join").post(joinProject);
 router.route("/boards/:projectId").get(fetchBoardsByProjectId);
 router.param("projectId", findProject);
+router.route("/removeMember/:projectId").post(removeTeamMember);
 
 router
   .route("/:projectId")
