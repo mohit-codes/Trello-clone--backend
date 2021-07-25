@@ -11,7 +11,7 @@ const login = async (req, res) => {
     console.log(err)
   );
   if (user) {
-    const isPasswordCorrect = bcrypt.compare(password, user.password);
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (isPasswordCorrect) {
       const token = jwt.sign({ id: user._id, username: user.username }, secret);
       return res.json({
