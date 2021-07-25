@@ -42,6 +42,13 @@ const signup = async (req, res) => {
     if (user) {
       return res.json({
         success: false,
+        message: "Username already exists, Try different username",
+      });
+    }
+    const userWithSameEmail = await User.findOne({ email: email });
+    if (userWithSameEmail) {
+      return res.json({
+        success: false,
         message: "Account with email already exists, Try loggin in instead!",
       });
     }
