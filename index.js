@@ -27,11 +27,11 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", userRouter);
-app.use("/boards", boardRouter);
-app.use("/lists", listRouter);
-app.use("/cards", cardRouter);
-app.use("/comments", commentRouter);
-app.use("/projects", projectRouter);
+app.use("/boards", authenticate, boardRouter);
+app.use("/lists", authenticate, listRouter);
+app.use("/cards", authenticate, cardRouter);
+app.use("/comments", authenticate, commentRouter);
+app.use("/projects", authenticate, projectRouter);
 
 app.use(routeHandler);
 app.use(errorHandler);

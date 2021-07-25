@@ -11,7 +11,7 @@ const login = async (req, res) => {
     console.log(err)
   );
   if (user) {
-    const isPasswordCorrect = bcrypt.compare(password, user.password);
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (isPasswordCorrect) {
       const token = jwt.sign({ id: user._id, username: user.username }, secret);
       return res.json({
@@ -40,6 +40,13 @@ const signup = async (req, res) => {
 
     const user = await User.findOne({ username: username });
     if (user) {
+      return res.json({
+        success: false,
+        message: "Username already exists, Try different username",
+      });
+    }
+    const userWithSameEmail = await User.findOne({ email: email });
+    if (userWithSameEmail) {
       return res.json({
         success: false,
         message: "Account with email already exists, Try loggin in instead!",
