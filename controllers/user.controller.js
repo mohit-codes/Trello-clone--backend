@@ -74,18 +74,23 @@ const signup = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.json({ success: false, message: "An unexpected error occured." });
+    res.json({ success: false, message: "An unexpected error occurred." });
   }
 };
 
 const fetchBoardsById = async (req, res) => {
   const userId = req.params.userId;
   const { personalBoards } = await User.findById(userId);
-  const data = await Board.find({ _id: { $in: personalBoards } }).catch((err) =>
-    console.log(err)
-  );
-  console.log(data);
-  return res.status(200).json({ success: true, boards: data });
+  try {
+    const data = await Board.find({ _id: { $in: personalBoards } }).catch(
+      (err) => console.log(err)
+    );
+    console.log(data);
+    return res.status(200).json({ success: true, boards: data });
+  } catch (err) {
+    console.log(err);
+    return res.json({ success: false, boards: null });
+  }
 };
 
 module.exports = { login, signup, fetchBoardsById };
