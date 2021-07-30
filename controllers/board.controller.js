@@ -99,6 +99,21 @@ const fetchListsByBoardId = async (req, res) => {
   return res.status(200).json({ success: true, lists: data });
 };
 
+const fetchBoardsByUserId = async (req, res) => {
+  const userId = req.params.userId;
+  const { personalBoards } = await User.findById(userId);
+  try {
+    const data = await Board.find({ _id: { $in: personalBoards } }).catch(
+      (err) => console.log(err)
+    );
+    console.log(data);
+    return res.status(200).json({ success: true, boards: data });
+  } catch (err) {
+    console.log(err);
+    return res.json({ success: false, boards: null });
+  }
+};
+
 module.exports = {
   createBoard,
   deleteBoard,
@@ -106,4 +121,5 @@ module.exports = {
   updateBoard,
   getBoardById,
   fetchListsByBoardId,
+  fetchBoardsByUserId,
 };
