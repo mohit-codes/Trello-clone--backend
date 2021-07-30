@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-// const cors = require("cors");
+const cors = require("cors");
 const { initializeDBConnection } = require("./config/db.connect");
 const userRouter = require("./routers/user.router");
 const boardRouter = require("./routers/board.router");
@@ -15,7 +15,7 @@ const PORT = 8080;
 
 const app = express();
 app.use(bodyParser.json());
-// app.use(cors);
+app.use(cors());
 
 // called before any route
 initializeDBConnection();

@@ -144,6 +144,21 @@ const removeTeamMember = async (req, res) => {
   }
 };
 
+const fetchProjectsByUserId = async (req, res) => {
+  const userId = req.params.userId;
+  const { projects } = await User.findById(userId);
+  try {
+    const data = await Project.find({ _id: { $in: projects } }).catch((err) =>
+      console.log(err)
+    );
+    console.log(data);
+    return res.status(200).json({ success: true, projects: data });
+  } catch (err) {
+    console.log(err);
+    return res.json({ success: false, projects: null });
+  }
+};
+
 module.exports = {
   createProject,
   deleteProject,
@@ -153,4 +168,5 @@ module.exports = {
   getProjectById,
   removeTeamMember,
   fetchBoardsByProjectId,
+  fetchProjectsByUserId,
 };

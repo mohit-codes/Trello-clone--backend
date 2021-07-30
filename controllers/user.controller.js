@@ -1,7 +1,6 @@
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const Board = require("../models/board.model");
 // eslint-disable-next-line no-undef
 const secret = process.env.JWT_SECRET;
 
@@ -74,18 +73,8 @@ const signup = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.json({ success: false, message: "An unexpected error occured." });
+    res.json({ success: false, message: "An unexpected error occurred." });
   }
 };
 
-const fetchBoardsById = async (req, res) => {
-  const userId = req.params.userId;
-  const { personalBoards } = await User.findById(userId);
-  const data = await Board.find({ _id: { $in: personalBoards } }).catch((err) =>
-    console.log(err)
-  );
-  console.log(data);
-  return res.status(200).json({ success: true, boards: data });
-};
-
-module.exports = { login, signup, fetchBoardsById };
+module.exports = { login, signup };
