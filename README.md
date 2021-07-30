@@ -8,8 +8,6 @@ Backend using ExpressJS connected to MongoDB through Mongoose
 
 - POST /users/login - Takes username and password as a parameter and returns JWT.
 - POST /users/signup - Providing username, password, and email would add a new user into the database.
-- GET /users/boards/:userId - fetch all boards of single user.
-- GET /users/projects/:userId - fetch all projects of single user.
 
 ### Projects (Teams)
 
@@ -19,7 +17,8 @@ Backend using ExpressJS connected to MongoDB through Mongoose
 - DELETE /projects/:projectId - delete project.
 - GET /projects/boards/:projectId - fetch all projects project.
 - POST /projects/removeMember/:projectId - remove team member by memberId.
-
+- GET /projects/:userId - fetch all projects of single user.
+- 
 ### Boards
 
 - POST /boards/create - Takes title and userId to add new board and returns boardId.
@@ -27,6 +26,7 @@ Backend using ExpressJS connected to MongoDB through Mongoose
 - PUT /boards/:boardId - Update details of board (except id and ref).
 - DELETE /boards/:boardId - delete board.
 - GET /boards/lists/:boardId - fetch all lists of single board.
+- GET /boards/:userId - fetch all boards of single user.
 
 ### Lists
 
