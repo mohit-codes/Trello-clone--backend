@@ -6,7 +6,7 @@ const List = require("../models/list.model");
 
 const createBoard = async (req, res) => {
   try {
-    const { title, userId, isPersonal, projectId } = req.body;
+    const { title, userId, isPersonal,projectId } = req.body;
     const board = new Board({
       title: title,
       userId: userId,
@@ -28,7 +28,7 @@ const createBoard = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Board created",
-      boardId: savedBoard._id,
+      board: savedBoard,
     });
   } catch (err) {
     console.log(err);
@@ -106,7 +106,6 @@ const fetchBoardsByUserId = async (req, res) => {
     const data = await Board.find({ _id: { $in: personalBoards } }).catch(
       (err) => console.log(err)
     );
-    console.log(data);
     return res.status(200).json({ success: true, boards: data });
   } catch (err) {
     console.log(err);
