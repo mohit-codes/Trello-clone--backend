@@ -22,7 +22,7 @@ const createProject = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Project created",
-      projectId: savedProject._id,
+      project: savedProject,
     });
   } catch (err) {
     console.log(err);
@@ -151,7 +151,6 @@ const fetchProjectsByUserId = async (req, res) => {
     const data = await Project.find({ _id: { $in: projects } }).catch((err) =>
       console.log(err)
     );
-    console.log(data);
     return res.status(200).json({ success: true, projects: data });
   } catch (err) {
     console.log(err);
