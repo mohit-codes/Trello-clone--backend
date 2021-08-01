@@ -3,8 +3,8 @@ const User = require("../models/user.model");
 require("dotenv");
 const authenticate = async (req, res, next) => {
   try {
-    const token = req.headers.authorization;
-    console.log(token);
+    let token = req.headers.authorization;
+ token = token.split(" ")[1];
     if (!token) {
       return res.status(401).json({
         success: false,
