@@ -19,7 +19,7 @@ const createList = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "list created",
-      listId: savedList._id,
+      list: savedList,
     });
   } catch (err) {
     console.log(err);

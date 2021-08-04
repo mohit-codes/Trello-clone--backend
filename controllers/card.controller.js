@@ -16,7 +16,7 @@ const createCard = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Card created",
-      cardId: savedCard._id,
+      card: savedCard,
     });
   } catch (err) {
     console.log(err);
