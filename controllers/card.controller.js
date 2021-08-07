@@ -82,7 +82,7 @@ const fetchCommentsByCardId = async (req, res) => {
   const data = await Comment.find({ _id: { $in: comments } }).catch((err) =>
     console.log(err)
   );
-  return res.status(200).json({ success: true, Comment: data });
+  return res.status(200).json({ success: true, comments: data });
 };
 
 module.exports = {
