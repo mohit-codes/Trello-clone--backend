@@ -6,7 +6,6 @@ const cardSchema = new Schema(
     title: {
       type: String,
       required: "cannot add unnamed card",
-      unique: true,
     },
     description: String,
     listId: {
