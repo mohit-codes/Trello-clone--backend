@@ -15,7 +15,7 @@ Backend using ExpressJS connected to MongoDB through Mongoose
 - POST /projects/join - Join project using project code and userId.
 - PUT /projects/:projectId - Update details of project(except id and refs).
 - DELETE /projects/:projectId - delete project.
-- GET /projects/boards/:projectId - fetch all projects project.
+- GET /projects/boards/:projectId - fetch all boards of the project.
 - POST /projects/removeMember/:projectId - remove team member by memberId.
 - GET /projects/:userId - fetch all projects of single user.
 - 
