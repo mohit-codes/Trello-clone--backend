@@ -18,7 +18,7 @@ const createComment = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Comment added",
-      commentId: savedComment._id,
+      comment: savedComment,
     });
   } catch (err) {
     console.log(err);
