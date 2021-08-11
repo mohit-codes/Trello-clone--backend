@@ -4,13 +4,14 @@ require("dotenv");
 const authenticate = async (req, res, next) => {
   try {
     let token = req.headers.authorization;
- token = token.split(" ")[1];
-    if (!token) {
+if (!token) {
       return res.status(401).json({
         success: false,
         message: "Unauthorized request, Token not found.",
       });
-    }
+    } 
+	token = token.split(" ")[1];
+    
     // eslint-disable-next-line no-undef
     const decodedValue = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decodedValue.id);
