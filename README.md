@@ -18,7 +18,7 @@ Backend using ExpressJS connected to MongoDB through Mongoose
 - GET /projects/boards/:projectId - fetch all boards of the project.
 - POST /projects/removeMember/:projectId - remove team member by memberId.
 - GET /projects/:userId - fetch all projects of single user.
-- 
+  
 ### Boards
 
 - POST /boards/create - Takes title and userId to add new board and returns boardId.
