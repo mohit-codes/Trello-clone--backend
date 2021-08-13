@@ -1,3 +1,5 @@
+require("dotenv").config();
+const port = process.env.PORT || 3000;
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -11,7 +13,6 @@ const projectRouter = require("./routers/project.router");
 const routeHandler = require("./middlewares/routeHandler");
 const errorHandler = require("./middlewares/errorHanler");
 const authenticate = require("./middlewares/authenticate");
-const PORT = 8080;
 
 const app = express();
 app.use(bodyParser.json());
@@ -36,6 +37,6 @@ app.use("/projects", authenticate, projectRouter);
 app.use(routeHandler);
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log("server started on port: ", PORT);
+app.listen(port, () => {
+  console.log("server started on port: ", port);
 });
