@@ -62,7 +62,7 @@ const deleteComment = async (req, res) => {
   comment
     .delete()
     .then(() => {
-      return res.json({ success: true, message: "Card deleted" });
+      return res.json({ success: true, message: "comment deleted" });
     })
     .catch((err) => {
       res.json({ success: false, message: err.message });

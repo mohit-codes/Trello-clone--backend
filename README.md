@@ -45,6 +45,6 @@ Backend using ExpressJS connected to MongoDB through Mongoose
 
 ### Comment
 
-- POST /comment/create - Takes content, author and cardId to add new comment and returns commentId
-- PUT /comment/:commentId - Update comment.
-- DELETE /comment/:commentId - delete comment.
+- POST /comments/create - Takes content, author and cardId to add new comment and returns commentId
+- PUT /comments/:commentId - Update comment.
+- DELETE /comments/:commentId - delete comment.

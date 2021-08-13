@@ -36,9 +36,7 @@ const joinProject = async (req, res) => {
     const project = await Project.findOne({ projectCode: projectCode });
     const user = await User.findById(userId);
     if (!project || !user) {
-      res
-        .status(500)
-        .json({ success: false, message: "Invalid projectCode or userId" });
+     return res.json({ success: false, message: "Invalid projectCode" });
     }
     await User.updateOne({ _id: userId }, { $push: { projects: project._id } });
     await Project.updateOne(
@@ -48,6 +46,7 @@ const joinProject = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Project joined",
+      project: project
     });
   } catch (err) {
     console.log(err);
