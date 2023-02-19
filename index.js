@@ -13,10 +13,11 @@ const projectRouter = require("./routers/project.router");
 const routeHandler = require("./middlewares/routeHandler");
 const errorHandler = require("./middlewares/errorHanler");
 const authenticate = require("./middlewares/authenticate");
+const { corsOptions } = require("./util");
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 // called before any route
 initializeDBConnection();
